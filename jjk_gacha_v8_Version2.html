@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>JJK Gacha — Invocação Maldita v8 Ultimate</title>
+<link rel="stylesheet" href="jjk_gacha_v8.css">
+</head>
+<body>
+<div id="app">
+  <div id="s-menu" class="screen active">
+    <div class="header" style="position:relative;z-index:101">
+      <div class="header-title">JJK Gacha</div>
+      <div class="header-stats"><div class="stat-item"><span>✨ v8.0</span></div></div>
+    </div>
+    <div class="menu-bg">
+      <div class="logo-wrap">
+        <div class="logo-kanji">呪術廻戦</div>
+        <div class="logo-title">Jujutsu Kaisen<span>Invocação Maldita</span></div>
+        <div class="logo-line"></div>
+        <div class="logo-sub">✦ Ultimate 8.0 ✦</div>
+      </div>
+      <div class="menu-cards">
+        <div class="menu-card sorcerer" onclick="startGame('sorcerer')">
+          <div class="menu-card-icon">⚔️</div>
+          <div class="menu-card-title">⚡ Feiticeiro</div>
+          <div class="menu-card-desc">Invocar um jujutsu sorcerer com técnicas épicas</div>
+        </div>
+        <div class="menu-card curse" onclick="startGame('curse')">
+          <div class="menu-card-icon">👹</div>
+          <div class="menu-card-title">💀 Maldição</div>
+          <div class="menu-card-desc">Invocar um espírito amaldiçoado devastador</div>
+        </div>
+        <div class="menu-card full" onclick="showHistory()">
+          <div class="menu-card-icon">📜</div>
+          <div class="menu-card-title" style="color:var(--goldL)">✨ Histórico</div>
+          <div class="menu-card-desc">Veja suas invocações anteriores</div>
+        </div>
+        <div class="menu-card full" onclick="startMultiplayer()">
+          <div class="menu-card-icon">👥</div>
+          <div class="menu-card-title" style="color:#64b5f6">🎮 Multiplayer</div>
+          <div class="menu-card-desc">Batalhe com um amigo na mesma tela</div>
+        </div>
+      </div>
+      <div class="version-note">✦ 200+ técnicas · 20+ domínios · 15+ traços · 12+ formas · 20+ inimigos · Batalhas duráveis ✦</div>
+    </div>
+  </div>
+
+  <div id="s-gacha" class="screen">
+    <div class="header">
+      <div class="header-title">Invocação</div>
+      <button class="btn btn-main" onclick="goMenu()" style="width:auto;margin:0;min-height:40px;padding:6px 12px;font-size:clamp(10px,2.5vw,11px)">↩ Menu</button>
+    </div>
+    <div style="padding:clamp(14px,4vw,20px)">
+      <div class="phases" id="phDots"></div>
+      <div id="gachaArea"></div>
+      <button class="btn btn-main" id="spinBtn" onclick="doSpin()" style="display:none">⟳ Girar Destino</button>
+    </div>
+  </div>
+
+  <div id="s-stats-gacha" class="screen">
+    <div class="header">
+      <div class="header-title">Customizar Stats</div>
+      <button class="btn btn-main" onclick="goReveal()" style="width:auto;margin:0;min-height:40px;padding:6px 12px;font-size:clamp(10px,2.5vw,11px)">↩ Ficha</button>
+    </div>
+    <div style="padding:clamp(14px,4vw,20px)">
+      <div id="statsGachaContent"></div>
+    </div>
+  </div>
+
+  <div id="s-reveal" class="screen">
+    <div class="header">
+      <div class="header-title">Ficha Personagem</div>
+      <button class="btn btn-main" onclick="goMenu()" style="width:auto;margin:0;min-height:40px;padding:6px 12px;font-size:clamp(10px,2.5vw,11px)">↩ Menu</button>
+    </div>
+    <div style="padding:clamp(14px,4vw,20px)">
+      <div id="revealContent"></div>
+    </div>
+  </div>
+
+  <div id="s-battle" class="screen">
+    <div class="header">
+      <div class="header-title">Combate</div>
+      <div class="header-stats" id="headerStats"></div>
+    </div>
+    <div style="padding:clamp(12px,3vw,18px)">
+      <div id="battleContent"></div>
+    </div>
+  </div>
+
+  <div id="s-multiplayer" class="screen">
+    <div class="header">
+      <div class="header-title">Multiplayer Local</div>
+      <button class="btn btn-main" onclick="goMenu()" style="width:auto;margin:0;min-height:40px;padding:6px 12px;font-size:clamp(10px,2.5vw,11px)">↩ Menu</button>
+    </div>
+    <div style="padding:clamp(14px,4vw,20px)">
+      <div id="multiplayerContent"></div>
+    </div>
+  </div>
+
+  <div id="s-history" class="screen">
+    <div class="header">
+      <div class="header-title">Histórico</div>
+      <button class="btn btn-main" onclick="goMenu()" style="width:auto;margin:0;min-height:40px;padding:6px 12px;font-size:clamp(10px,2.5vw,11px)">↩ Menu</button>
+    </div>
+    <div style="padding:clamp(14px,4vw,20px)">
+      <div class="panel">
+        <div class="section-label">📜 Histórico de Invocações</div>
+        <div id="histList"></div>
+      </div>
+      <button class="btn btn-main" onclick="goMenu()">↩ Voltar ao Menu</button>
+      <button class="btn btn-danger" onclick="clearHist()" style="margin-top:8px">🗑 Limpar Histórico</button>
+    </div>
+  </div>
+</div>
+
+<script src="jjk_gacha_v8.js"></script>
+</body>
+</html>
